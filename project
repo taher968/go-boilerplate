@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+usage() {
+  echo "Usage: $0 [-b] [-r] [-t]"
+  echo "  -b  build the docker image"
+  echo "  -r  run the docker image"
+  echo "  -t  run tests"
+  exit 1
+}
+
+[ $# -eq 0 ] && usage
+
+while getopts "brt" opt; do
+  case "$opt" in
+    b) "$ROOT_DIR/scripts/build.sh" build ;;
+    r) "$ROOT_DIR/scripts/run.sh" run ;;
+    t) "$ROOT_DIR/scripts/test.sh" test ;;
+    *) usage ;;
+  esac
+done
